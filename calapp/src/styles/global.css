@@ -1,0 +1,164 @@
+:root {
+  --primary-color: #4285f4;
+  --secondary-color: #34a853;
+  --text-color: #333;
+  --bg-color: #fff;
+  --border-color: #e0e0e0;
+  --today-color: #fbbc05;
+  --other-month-color: #f5f5f5;
+  --weekend-color: #f8f9fa;
+  --week-number-color: #ea4335;
+}
+
+.dark {
+  --primary-color: #8ab4f8;
+  --secondary-color: #81c995;
+  --text-color: #e8eaed;
+  --bg-color: #202124;
+  --border-color: #5f6368;
+  --today-color: #f29900;
+  --other-month-color: #303134;
+  --weekend-color: #292a2d;
+  --week-number-color: #f28b82;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: all 0.3s ease;
+}
+
+.app {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.calendar-header {
+  margin-bottom: 20px;
+}
+
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.month-navigation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.nav-arrow {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--primary-color);
+  font-size: 1.5rem;
+}
+
+.month-year {
+  font-size: 1.8rem;
+  color: var(--primary-color);
+}
+
+.calendar-grid {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.week-header, .week-row {
+  display: grid;
+  grid-template-columns: 50px repeat(7, 1fr);
+}
+
+.week-header {
+  background-color: var(--primary-color);
+  color: white;
+  font-weight: bold;
+}
+
+.day-header, .week-number-header, .week-number, .day-cell {
+  padding: 10px;
+  text-align: center;
+  border-right: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.week-number-header {
+  background-color: var(--primary-color);
+}
+
+.week-number {
+  background-color: var(--week-number-color);
+  color: white;
+  font-weight: bold;
+}
+
+.day-cell {
+  min-height: 80px;
+  background-color: var(--bg-color);
+}
+
+.day-cell.other-month {
+  background-color: var(--other-month-color);
+  color: #888;
+}
+
+.day-cell.today {
+  background-color: var(--today-color);
+  color: white;
+}
+
+.day-number {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.settings-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-color);
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .week-header, .week-row {
+    grid-template-columns: 40px repeat(7, 1fr);
+  }
+  
+  .day-header, .week-number-header, .week-number, .day-cell {
+    padding: 5px;
+    font-size: 0.8rem;
+  }
+  
+  .month-year {
+    font-size: 1.2rem;
+  }
+}
