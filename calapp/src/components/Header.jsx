@@ -6,7 +6,7 @@ const Header = ({ currentDate, prevMonth, nextMonth, darkMode, setDarkMode, setS
   return (
     <header className="calendar-header">
       <div className="header-top">
-        <div className="current-date">{format(currentDate, 'MMMM d, yyyy')}</div>
+        <div className="current-date">{format(currentDate, 'd')}</div>
         <div className="header-controls">
           <ThemeToggle darkMode={darkMode} setDarkMode={setDarkMode} />
           <button 
