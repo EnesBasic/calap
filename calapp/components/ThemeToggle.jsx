@@ -6,17 +6,17 @@ export default function ThemeToggle() {
   return (
     <button
       onClick={toggleTheme}
+      aria-label="Toggle theme"
       style={{
-        padding: '8px 16px',
-        borderRadius: '8px',
+        background: 'none',
         border: 'none',
-        background: darkMode ? '#6b46c1' : '#805ad5',
-        color: 'white',
+        fontSize: '18px',
         cursor: 'pointer',
-        fontSize: '14px',
+        color: darkMode ? '#a3bffa' : '#4a5568',
+        padding: '4px 8px',
       }}
     >
-      {darkMode ? '🌙 Light Mode' : '☀️ Dark Mode'}
+      {darkMode ? '☀️' : '🌙'}
     </button>
   );
 }

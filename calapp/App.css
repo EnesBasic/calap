@@ -1,0 +1,9 @@
+/* Optional: You can move styles here if not using inline + style jsx */
+
+@media (min-width: 768px) {
+  .header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
