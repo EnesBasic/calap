@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameMonth, isSameDay } from 'date-fns';
-import Header from './components/Header';
+import { startOfMonth, endOfMonth, eachDayOfInterval } from 'date-fns';
 import CalendarGrid from './components/CalendarGrid';
+import MiniCalendar from './components/MiniCalendar';
+import Header from './components/Header';
 import './styles/global.css';
 
 function App() {
@@ -29,13 +30,25 @@ function App() {
         nextMonth={nextMonth}
         darkMode={darkMode}
         setDarkMode={setDarkMode}
-        setShowMiniCalendars={setShowMiniCalendars}
+        setShowMiniCalendars={setShowMiniCalendars} 
+        showMiniCalendars={showMiniCalendars}  
       />
       <CalendarGrid 
         currentDate={currentDate} 
         monthDays={monthDays} 
       />
-      {/* We'll add MiniCalendar and Events components later */}
+      {showMiniCalendars && (
+        <div className="mini-calendars-container">
+          <MiniCalendar 
+            currentDate={new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1)} 
+            onSelectDate={setCurrentDate}
+          />
+          <MiniCalendar 
+            currentDate={new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1)} 
+            onSelectDate={setCurrentDate}
+          />
+        </div>
+      )}
     </div>
   );
 }
