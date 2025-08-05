@@ -156,6 +156,33 @@ body {
   color: var(--text-color);
 }
 
+.mini-calendar {
+  width: 200px;
+  margin: 10px;
+}
+
+.mini-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+
+.mini-day {
+  border: none;
+  background: #f0f0f0;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.mini-day.other-month {
+  color: #ccc;
+}
+
+.mini-day.selected {
+  background: #0066cc;
+  color: white;
+}
+
 /* Responsive styles */
 @media (max-width: 768px) {
   .week-header, .week-row {
