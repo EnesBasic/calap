@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { format, startOfMonth, endOfMonth, eachDayOfInterval } from 'date-fns';
+import { startOfMonth, endOfMonth, eachDayOfInterval } from 'date-fns';
 import Header from './components/Header';
 import CalendarGrid from './components/CalendarGrid';
 import MiniCalendar from './components/MiniCalendar';
