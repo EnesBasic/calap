@@ -1,25 +1,25 @@
 :root {
-  --primary-color: #4285f4;
-  --secondary-color: #34a853;
+  --primary-color: #3f51b5;
+  --secondary-color: #5c6bc0;
   --text-color: #333;
   --bg-color: #fff;
   --border-color: #e0e0e0;
-  --today-color: #fbbc05;
+  --today-color: #ff5722;
   --other-month-color: #f5f5f5;
+  --week-number-color: #757575;
   --weekend-color: #f8f9fa;
-  --week-number-color: #ea4335;
 }
 
 .dark {
-  --primary-color: #8ab4f8;
-  --secondary-color: #81c995;
+  --primary-color: #7986cb;
+  --secondary-color: #9fa8da;
   --text-color: #e8eaed;
-  --bg-color: #202124;
-  --border-color: #5f6368;
-  --today-color: #f29900;
-  --other-month-color: #303134;
-  --weekend-color: #292a2d;
-  --week-number-color: #f28b82;
+  --bg-color: #121212;
+  --border-color: #333;
+  --today-color: #ff7043;
+  --other-month-color: #1e1e1e;
+  --week-number-color: #bdbdbd;
+  --weekend-color: #1a1a1a;
 }
 
 * {
@@ -29,40 +29,32 @@
 }
 
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Roboto', sans-serif;
   background-color: var(--bg-color);
   color: var(--text-color);
   transition: all 0.3s ease;
 }
 
 .app {
-  max-width: 1200px;
+  max-width: 800px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 10px;
 }
 
 .calendar-header {
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
 .header-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
-.header-controls {
-  display: flex;
-  align-items: center;
-  gap: 15px;
+  display: none;
 }
 
 .month-navigation {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 20px;
+  gap: 15px;
+  margin-bottom: 10px;
 }
 
 .nav-arrow {
@@ -70,175 +62,122 @@ body {
   border: none;
   cursor: pointer;
   color: var(--primary-color);
-  font-size: 1.5rem;
+  font-size: 1.2rem;
+  padding: 0 10px;
 }
 
 .month-year {
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   color: var(--primary-color);
+  font-weight: 500;
 }
 
 .calendar-grid {
   display: flex;
   flex-direction: column;
-  width: 100%;
+  border: none;
 }
 
 .week-header, .week-row {
-  display: flex;
+  display: grid;
+  grid-template-columns: 30px repeat(7, 1fr);
 }
 
-.week-number, .week-number-header, .day-header, .day-cell {
-  flex: 1;
+.week-header {
+  background-color: transparent;
+  color: var(--text-color);
+  font-weight: 500;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 5px;
+}
+
+.day-header, .week-number-header, .week-number, .day-cell {
+  padding: 5px;
   text-align: center;
-  padding: 8px;
-  border: 1px solid #eee;
-}
-
-.day-header {
-  font-weight: bold;
-}
-
-.current-month {
-  background: white;
-}
-
-.other-month {
-  background: #f9f9f9;
-  color: #aaa;
-}
-
-.today {
-  background: #e6f7ff;
-  font-weight: bold;
+  border: none;
 }
 
 .week-number-header {
-  background-color: var(--primary-color);
+  background-color: transparent;
 }
 
 .week-number {
-  background-color: var(--week-number-color);
-  color: white;
-  font-weight: bold;
+  background-color: transparent;
+  color: var(--week-number-color);
+  font-weight: 500;
+  font-size: 0.9rem;
 }
 
 .day-cell {
-  min-height: 80px;
-  background-color: var(--bg-color);
+  min-height: 40px;
+  background-color: transparent;
+  font-size: 0.9rem;
 }
 
 .day-cell.other-month {
-  background-color: var(--other-month-color);
+  background-color: transparent;
   color: #888;
 }
 
 .day-cell.today {
   background-color: var(--today-color);
   color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
 }
 
 .day-number {
-  font-weight: bold;
-  margin-bottom: 5px;
+  font-weight: normal;
+  margin-bottom: 0;
 }
 
-.theme-toggle {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.settings-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: var(--text-color);
-}
-
-.mini-calendar {
-  width: 200px;
-  margin: 10px;
-}
-
-.mini-grid {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 4px;
-}
-
-.mini-day {
-  border: none;
-  background: #f0f0f0;
-  padding: 5px;
-  cursor: pointer;
-}
-
-.mini-day.other-month {
-  color: #ccc;
-}
-
-.mini-day.selected {
-  background: #0066cc;
-  color: white;
-}
-
-/* Responsive styles */
-@media (max-width: 768px) {
-  .week-header, .week-row {
-    grid-template-columns: 40px repeat(7, 1fr);
-  }
-  
-  .day-header, .week-number-header, .week-number, .day-cell {
-    padding: 5px;
-    font-size: 0.8rem;
-  }
-  
-  .month-year {
-    font-size: 1.2rem;
-  }
-
-  /* Mini Calendar Styles */
+/* Mini Calendar Styles */
 .mini-calendars-container {
   display: flex;
-  gap: 20px;
-  margin-top: 20px;
+  gap: 15px;
+  margin-top: 15px;
   justify-content: center;
 }
 
 .mini-calendar {
-  width: 200px;
+  width: 180px;
   border: 1px solid var(--border-color);
-  border-radius: 8px;
-  padding: 10px;
+  border-radius: 4px;
+  padding: 8px;
   background-color: var(--bg-color);
 }
 
 .mini-calendar-header {
   text-align: center;
-  font-weight: bold;
-  margin-bottom: 10px;
+  font-weight: 500;
+  margin-bottom: 8px;
   color: var(--primary-color);
+  font-size: 0.9rem;
 }
 
 .mini-calendar-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 5px;
+  gap: 3px;
 }
 
 .mini-day-header {
   text-align: center;
-  font-size: 0.8rem;
-  font-weight: bold;
+  font-size: 0.7rem;
+  font-weight: 500;
 }
 
 .mini-day-cell {
   text-align: center;
-  padding: 5px;
-  font-size: 0.8rem;
+  padding: 3px;
+  font-size: 0.7rem;
   cursor: pointer;
-  border-radius: 4px;
+  border-radius: 2px;
 }
 
 .mini-day-cell.current-month {
@@ -255,7 +194,37 @@ body {
   color: white;
 }
 
+/* Events section */
+.events-section {
+  margin-top: 20px;
+  padding: 10px;
+  border-top: 1px solid var(--border-color);
+}
+
+.events-title {
+  font-weight: 500;
+  color: var(--primary-color);
+  margin-bottom: 10px;
+}
+
 @media (max-width: 768px) {
+  .app {
+    padding: 5px;
+  }
+  
+  .week-header, .week-row {
+    grid-template-columns: 25px repeat(7, 1fr);
+  }
+  
+  .day-header, .week-number-header, .week-number, .day-cell {
+    padding: 2px;
+    font-size: 0.8rem;
+  }
+  
+  .month-year {
+    font-size: 1.2rem;
+  }
+  
   .mini-calendars-container {
     flex-direction: column;
     align-items: center;
@@ -264,6 +233,4 @@ body {
   .mini-calendar {
     width: 150px;
   }
-}
-
 }

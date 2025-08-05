@@ -3,12 +3,9 @@ import { format, getWeek, isSameMonth, isSameDay, addDays, startOfWeek } from 'd
 const CalendarGrid = ({ currentDate, monthDays }) => {
   // Week configuration (Monday start)
   const weekConfig = { weekStartsOn: 1 };
-  const weekStart = startOfWeek(currentDate, weekConfig);
   
-  // Generate day headers (Mon-Sun)
-  const daysOfWeek = Array.from({ length: 7 }).map((_, i) => 
-    format(addDays(weekStart, i), 'EEE')
-  );
+  // Croatian day names
+  const daysOfWeek = ['Pon', 'Uto', 'Sri', 'Čet', 'Pet', 'Sub', 'Ned'];
 
   // Generate 6 weeks of calendar cells
   const weeks = Array.from({ length: 6 }).map((_, w) => {
