@@ -1,26 +1,16 @@
 import { format, getWeek, isSameMonth, isSameDay, addDays, startOfWeek } from 'date-fns';
 
 const CalendarGrid = ({ currentDate, monthDays }) => {
-  // Week configuration (Monday start)
   const weekConfig = { weekStartsOn: 1 };
-  
-  // Croatian day names
-  const daysOfWeek = ['Pon', 'Uto', 'Sri', 'Čet', 'Pet', 'Sub', 'Ned'];
+  const croatianDays = ['Pon', 'Uto', 'Sri', 'Čet', 'Pet', 'Sub', 'Ned'];
 
-  // Generate 6 weeks of calendar cells
   const weeks = Array.from({ length: 6 }).map((_, w) => {
-    const currentWeekStart = startOfWeek(
-      addDays(monthDays[0], w * 7), 
-      weekConfig
-    );
+    const currentWeekStart = startOfWeek(addDays(monthDays[0], w * 7), weekConfig);
     const weekNumber = getWeek(currentWeekStart);
 
     return (
       <div key={`week-${w}`} className="week-row">
-        {/* Week number cell */}
         <div className="week-number">{weekNumber}</div>
-        
-        {/* Day cells */}
         {Array.from({ length: 7 }).map((_, d) => {
           const day = addDays(currentWeekStart, d);
           const isCurrentMonth = isSameMonth(day, currentDate);
@@ -29,11 +19,7 @@ const CalendarGrid = ({ currentDate, monthDays }) => {
           return (
             <div 
               key={day.toString()}
-              className={`day-cell ${
-                isCurrentMonth ? 'current-month' : 'other-month'
-              } ${
-                isToday ? 'today' : ''
-              }`}
+              className={`day-cell ${isCurrentMonth ? 'current-month' : 'other-month'} ${isToday ? 'today' : ''}`}
             >
               <div className="day-number">{format(day, 'd')}</div>
             </div>
@@ -45,17 +31,12 @@ const CalendarGrid = ({ currentDate, monthDays }) => {
 
   return (
     <div className="calendar-grid">
-      {/* Header row */}
       <div className="week-header">
         <div className="week-number-header"></div>
-        {daysOfWeek.map((day, i) => (
-          <div key={i} className="day-header">
-            {day}
-          </div>
+        {croatianDays.map((day, i) => (
+          <div key={i} className="day-header">{day}</div>
         ))}
       </div>
-      
-      {/* Calendar weeks */}
       {weeks}
     </div>
   );

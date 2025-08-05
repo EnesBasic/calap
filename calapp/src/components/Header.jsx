@@ -2,17 +2,16 @@ import { format } from 'date-fns';
 import { ChevronLeft, ChevronRight, Settings } from '@mui/icons-material';
 import ThemeToggle from './ThemeToggle';
 
-const Header = ({ currentDate, prevMonth, nextMonth, darkMode, setDarkMode, setShowMiniCalendars, showMiniCalendars }) => {
+const Header = ({ currentDate, prevMonth, nextMonth, darkMode, setDarkMode, setShowMiniCalendars }) => {
   return (
     <header className="calendar-header">
       <div className="header-top">
-        <div className="current-date">{format(currentDate, 'd')}</div>
+        <div className="current-date">{format(currentDate, 'dd.MM.yyyy')}</div>
         <div className="header-controls">
           <ThemeToggle darkMode={darkMode} setDarkMode={setDarkMode} />
           <button 
             className="settings-btn" 
             onClick={() => setShowMiniCalendars(prev => !prev)}
-            aria-label={showMiniCalendars ? 'Hide mini calendars' : 'Show mini calendars'}
           >
             <Settings />
           </button>

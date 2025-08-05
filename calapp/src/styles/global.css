@@ -72,6 +72,67 @@ body {
   font-weight: 500;
 }
 
+/* Add these updates to your existing CSS */
+.calendar-header {
+  margin-bottom: 10px;
+}
+
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.current-date {
+  font-size: 0.9rem;
+  color: var(--text-color);
+}
+
+.month-navigation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+
+.month-year {
+  font-size: 1.3rem;
+  font-weight: 500;
+}
+
+.week-header {
+  font-weight: 500;
+  padding-bottom: 5px;
+}
+
+.day-header {
+  padding: 5px 0;
+}
+
+.week-number {
+  font-size: 0.8rem;
+  color: var(--week-number-color);
+  padding: 5px 0;
+}
+
+.day-cell {
+  min-height: 30px;
+  padding: 3px 0;
+}
+
+.day-cell.today .day-number {
+  background-color: var(--today-color);
+  color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
 .calendar-grid {
   display: flex;
   flex-direction: column;
