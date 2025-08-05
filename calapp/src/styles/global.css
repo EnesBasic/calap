@@ -161,4 +161,73 @@ body {
   .month-year {
     font-size: 1.2rem;
   }
+
+  /* Mini Calendar Styles */
+.mini-calendars-container {
+  display: flex;
+  gap: 20px;
+  margin-top: 20px;
+  justify-content: center;
+}
+
+.mini-calendar {
+  width: 200px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 10px;
+  background-color: var(--bg-color);
+}
+
+.mini-calendar-header {
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: var(--primary-color);
+}
+
+.mini-calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+}
+
+.mini-day-header {
+  text-align: center;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.mini-day-cell {
+  text-align: center;
+  padding: 5px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.mini-day-cell.current-month {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.mini-day-cell.other-month {
+  color: #888;
+}
+
+.mini-day-cell:hover {
+  background-color: var(--secondary-color);
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .mini-calendars-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .mini-calendar {
+    width: 150px;
+  }
+}
+
 }
