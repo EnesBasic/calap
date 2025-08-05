@@ -1,54 +1,54 @@
-import { format, getWeek, isSameMonth, isSameDay, addDays, startOfWeek, endOfWeek } from 'date-fns';
+import { format, getWeek, isSameMonth, isSameDay, addDays, startOfWeek } from 'date-fns';
 
 const CalendarGrid = ({ currentDate, monthDays }) => {
-  const weekStart = startOfWeek(currentDate, { weekStartsOn: 1 }); // Monday
-  const weekEnd = endOfWeek(currentDate, { weekStartsOn: 1 });
+  // Week configuration (Monday start)
+  const weekConfig = { weekStartsOn: 1 };
+  const weekStart = startOfWeek(currentDate, weekConfig);
   
-  const daysOfWeek = [];
-  for (let i = 0; i < 7; i++) {
-    daysOfWeek.push(format(addDays(weekStart, i), 'EEE'));
-  }
+  // Generate day headers (Mon-Sun)
+  const daysOfWeek = Array.from({ length: 7 }).map((_, i) => 
+    format(addDays(weekStart, i), 'EEE')
+  );
 
-  // Generate 6 weeks (7 days each) to cover all possible month layouts
-  const weeks = [];
-  let currentWeekStart = startOfWeek(monthDays[0], { weekStartsOn: 1 });
-  
-  for (let w = 0; w < 6; w++) {
-    const week = [];
-    const weekNumber = getWeek(addDays(currentWeekStart, w * 7));
-    
-    // Add week number as first cell
-    week.push(
-      <div key={`week-${weekNumber}`} className="week-number">
-        {weekNumber}
-      </div>
+  // Generate 6 weeks of calendar cells
+  const weeks = Array.from({ length: 6 }).map((_, w) => {
+    const currentWeekStart = startOfWeek(
+      addDays(monthDays[0], w * 7), 
+      weekConfig
     );
+    const weekNumber = getWeek(currentWeekStart);
 
-    // Add days
-    for (let d = 0; d < 7; d++) {
-      const day = addDays(currentWeekStart, w * 7 + d);
-      const isCurrentMonth = isSameMonth(day, currentDate);
-      const isToday = isSameDay(day, new Date());
-      
-      week.push(
-        <div 
-          key={day.toString()} 
-          className={`day-cell ${isCurrentMonth ? 'current-month' : 'other-month'} ${isToday ? 'today' : ''}`}
-        >
-          <div className="day-number">{format(day, 'd')}</div>
-        </div>
-      );
-    }
-    
-    weeks.push(
+    return (
       <div key={`week-${w}`} className="week-row">
-        {week}
+        {/* Week number cell */}
+        <div className="week-number">{weekNumber}</div>
+        
+        {/* Day cells */}
+        {Array.from({ length: 7 }).map((_, d) => {
+          const day = addDays(currentWeekStart, d);
+          const isCurrentMonth = isSameMonth(day, currentDate);
+          const isToday = isSameDay(day, new Date());
+          
+          return (
+            <div 
+              key={day.toString()}
+              className={`day-cell ${
+                isCurrentMonth ? 'current-month' : 'other-month'
+              } ${
+                isToday ? 'today' : ''
+              }`}
+            >
+              <div className="day-number">{format(day, 'd')}</div>
+            </div>
+          );
+        })}
       </div>
     );
-  }
+  });
 
   return (
     <div className="calendar-grid">
+      {/* Header row */}
       <div className="week-header">
         <div className="week-number-header"></div>
         {daysOfWeek.map((day, i) => (
@@ -57,6 +57,8 @@ const CalendarGrid = ({ currentDate, monthDays }) => {
           </div>
         ))}
       </div>
+      
+      {/* Calendar weeks */}
       {weeks}
     </div>
   );

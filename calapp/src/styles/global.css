@@ -81,27 +81,36 @@ body {
 .calendar-grid {
   display: flex;
   flex-direction: column;
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  overflow: hidden;
+  width: 100%;
 }
 
 .week-header, .week-row {
-  display: grid;
-  grid-template-columns: 50px repeat(7, 1fr);
+  display: flex;
 }
 
-.week-header {
-  background-color: var(--primary-color);
-  color: white;
+.week-number, .week-number-header, .day-header, .day-cell {
+  flex: 1;
+  text-align: center;
+  padding: 8px;
+  border: 1px solid #eee;
+}
+
+.day-header {
   font-weight: bold;
 }
 
-.day-header, .week-number-header, .week-number, .day-cell {
-  padding: 10px;
-  text-align: center;
-  border-right: 1px solid var(--border-color);
-  border-bottom: 1px solid var(--border-color);
+.current-month {
+  background: white;
+}
+
+.other-month {
+  background: #f9f9f9;
+  color: #aaa;
+}
+
+.today {
+  background: #e6f7ff;
+  font-weight: bold;
 }
 
 .week-number-header {
