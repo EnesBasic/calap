@@ -1,18 +1,10 @@
-import { Switch } from '@mui/material';
-import { DarkMode, LightMode } from '@mui/icons-material';
+import { useTheme } from '../contexts/themeContexts';
 
-const ThemeToggle = ({ darkMode, setDarkMode }) => {
+export default function ThemeToggle() {
+  const { isDark, toggleTheme } = useTheme();
   return (
-    <div className="theme-toggle">
-      <LightMode />
-      <Switch 
-        checked={darkMode} 
-        onChange={() => setDarkMode(!darkMode)} 
-        color="default"
-      />
-      <DarkMode />
-    </div>
+    <button onClick={toggleTheme} className="theme-toggle">
+      {isDark ? '☀️ Light Mode' : '🌙 Dark Mode'}
+    </button>
   );
-};
-
-export default ThemeToggle;
+}

@@ -1,3 +1,5 @@
+import { useTheme } from './contexts/themeContexts';
+
 import { useState } from 'react';
 import { startOfMonth, endOfMonth, eachDayOfInterval } from 'date-fns';
 import Header from './components/Header';
@@ -6,6 +8,7 @@ import MiniCalendar from './components/MiniCalendar';
 import './styles/global.css';
 
 function App() {
+  const { isDark } = useTheme();
   const [currentDate, setCurrentDate] = useState(new Date());
   const [showMiniCalendars, setShowMiniCalendars] = useState(false);
   const [darkMode, setDarkMode] = useState(false);

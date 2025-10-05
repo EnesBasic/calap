@@ -1,0 +1,399 @@
+// Welcome Barber Shop with Login and Register
+// This is a self-contained example using HTML, CSS, and JavaScript
+
+const barberShopApp = {
+  users: JSON.parse(localStorage.getItem('barberUsers') || '[]'),
+  currentUser: null,
+
+  init() {
+    this.showWelcomePage();
+    this.bindEvents();
+  },
+
+  showWelcomePage() {
+    document.body.innerHTML = `
+      <div class="container">
+        <header>
+          <h1>💈 Welcome to Elite Barber Shop</h1>
+          <p>Premium grooming services for the modern gentleman</p>
+        </header>
+        
+        <main>
+          <div class="actions">
+            <button id="loginBtn" class="btn">Login</button>
+            <button id="registerBtn" class="btn">Register</button>
+          </div>
+          
+          <div class="services">
+            <h2>Our Services</h2>
+            <ul>
+              <li>Haircuts & Styling</li>
+              <li>Beard Trimming & Shaping</li>
+              <li>Hot Towel Shave</li>
+              <li>Hair Coloring</li>
+              <li>Facial Treatment</li>
+            </ul>
+          </div>
+        </main>
+      </div>
+    `;
+  },
+
+  showLoginPage() {
+    document.body.innerHTML = `
+      <div class="container">
+        <header>
+          <h1>💈 Elite Barber Shop - Login</h1>
+        </header>
+        
+        <main>
+          <form id="loginForm" class="form">
+            <div class="form-group">
+              <label for="loginEmail">Email</label>
+              <input type="email" id="loginEmail" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="loginPassword">Password</label>
+              <input type="password" id="loginPassword" required>
+            </div>
+            
+            <button type="submit" class="btn">Login</button>
+            <button type="button" id="backBtn" class="btn secondary">Back</button>
+          </form>
+        </main>
+      </div>
+    `;
+    
+    this.bindLoginFormEvents();
+  },
+
+  showRegisterPage() {
+    document.body.innerHTML = `
+      <div class="container">
+        <header>
+          <h1>💈 Elite Barber Shop - Register</h1>
+        </header>
+        
+        <main>
+          <form id="registerForm" class="form">
+            <div class="form-group">
+              <label for="registerName">Full Name</label>
+              <input type="text" id="registerName" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="registerEmail">Email</label>
+              <input type="email" id="registerEmail" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="registerPassword">Password</label>
+              <input type="password" id="registerPassword" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="registerPhone">Phone Number</label>
+              <input type="tel" id="registerPhone" required>
+            </div>
+            
+            <button type="submit" class="btn">Register</button>
+            <button type="button" id="backBtn" class="btn secondary">Back</button>
+          </form>
+        </main>
+      </div>
+    `;
+    
+    this.bindRegisterFormEvents();
+  },
+
+  showDashboard() {
+    document.body.innerHTML = `
+      <div class="container">
+        <header>
+          <h1>💈 Elite Barber Shop</h1>
+          <p>Welcome, ${this.currentUser.name}!</p>
+        </header>
+        
+        <main>
+          <div class="dashboard">
+            <h2>Your Dashboard</h2>
+            <div class="user-info">
+              <p><strong>Email:</strong> ${this.currentUser.email}</p>
+              <p><strong>Phone:</strong> ${this.currentUser.phone || 'Not provided'}</p>
+            </div>
+            
+            <div class="booking-section">
+              <h3>Book an Appointment</h3>
+              <form id="bookingForm">
+                <div class="form-group">
+                  <label for="service">Service</label>
+                  <select id="service" required>
+                    <option value="">Select a service</option>
+                    <option value="haircut">Haircut & Styling</option>
+                    <option value="beard">Beard Trimming</option>
+                    <option value="shave">Hot Towel Shave</option>
+                    <option value="color">Hair Coloring</option>
+                    <option value="facial">Facial Treatment</option>
+                  </select>
+                </div>
+                
+                <div class="form-group">
+                  <label for="date">Date</label>
+                  <input type="date" id="date" required>
+                </div>
+                
+                <div class="form-group">
+                  <label for="time">Time</label>
+                  <select id="time" required>
+                    <option value="">Select a time</option>
+                    <option value="09:00">09:00 AM</option>
+                    <option value="10:00">10:00 AM</option>
+                    <option value="11:00">11:00 AM</option>
+                    <option value="12:00">12:00 PM</option>
+                    <option value="13:00">01:00 PM</option>
+                    <option value="14:00">02:00 PM</option>
+                    <option value="15:00">03:00 PM</option>
+                    <option value="16:00">04:00 PM</option>
+                    <option value="17:00">05:00 PM</option>
+                  </select>
+                </div>
+                
+                <button type="submit" class="btn">Book Now</button>
+                <button type="button" id="logoutBtn" class="btn secondary">Logout</button>
+              </form>
+            </div>
+          </div>
+        </main>
+      </div>
+    `;
+    
+    this.bindDashboardEvents();
+  },
+
+  bindEvents() {
+    document.addEventListener('click', (e) => {
+      if (e.target.id === 'loginBtn') {
+        this.showLoginPage();
+      } else if (e.target.id === 'registerBtn') {
+        this.showRegisterPage();
+      }
+    });
+  },
+
+  bindLoginFormEvents() {
+    document.getElementById('loginForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = document.getElementById('loginEmail').value;
+      const password = document.getElementById('loginPassword').value;
+      
+      const user = this.users.find(u => u.email === email && u.password === password);
+      if (user) {
+        this.currentUser = user;
+        this.showDashboard();
+      } else {
+        alert('Invalid email or password');
+      }
+    });
+    
+    document.getElementById('backBtn').addEventListener('click', () => {
+      this.showWelcomePage();
+      this.bindEvents();
+    });
+  },
+
+  bindRegisterFormEvents() {
+    document.getElementById('registerForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const name = document.getElementById('registerName').value;
+      const email = document.getElementById('registerEmail').value;
+      const password = document.getElementById('registerPassword').value;
+      const phone = document.getElementById('registerPhone').value;
+      
+      // Check if user already exists
+      if (this.users.some(u => u.email === email)) {
+        alert('User with this email already exists');
+        return;
+      }
+      
+      // Add new user
+      const newUser = { name, email, password, phone };
+      this.users.push(newUser);
+      localStorage.setItem('barberUsers', JSON.stringify(this.users));
+      
+      alert('Registration successful! Please login.');
+      this.showLoginPage();
+      this.bindLoginFormEvents();
+    });
+    
+    document.getElementById('backBtn').addEventListener('click', () => {
+      this.showWelcomePage();
+      this.bindEvents();
+    });
+  },
+
+  bindDashboardEvents() {
+    document.getElementById('bookingForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const service = document.getElementById('service').value;
+      const date = document.getElementById('date').value;
+      const time = document.getElementById('time').value;
+      
+      if (service && date && time) {
+        alert(`Appointment booked!\nService: ${service}\nDate: ${date}\nTime: ${time}`);
+      }
+    });
+    
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      this.currentUser = null;
+      this.showWelcomePage();
+      this.bindEvents();
+    });
+  }
+};
+
+// Styles
+const styles = `
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #333;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      padding: 30px;
+      text-align: center;
+    }
+    
+    header {
+      margin-bottom: 30px;
+      padding-bottom: 20px;
+      border-bottom: 2px solid #f0f0f0;
+    }
+    
+    h1 {
+      color: #5a3e36;
+      margin-bottom: 10px;
+    }
+    
+    header p {
+      color: #888;
+      font-size: 1.1em;
+    }
+    
+    .actions {
+      margin: 30px 0;
+    }
+    
+    .btn {
+      background: #5a3e36;
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      margin: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background 0.3s;
+    }
+    
+    .btn:hover {
+      background: #4a322d;
+    }
+    
+    .btn.secondary {
+      background: #ccc;
+      color: #333;
+    }
+    
+    .btn.secondary:hover {
+      background: #aaa;
+    }
+    
+    .services {
+      background: #f9f9f9;
+      padding: 20px;
+      border-radius: 8px;
+    }
+    
+    .services ul {
+      list-style: none;
+      margin-top: 15px;
+    }
+    
+    .services li {
+      padding: 10px;
+      margin: 5px 0;
+      background: white;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    
+    .form {
+      max-width: 400px;
+      margin: 0 auto;
+      text-align: left;
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    
+    input, select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+    
+    .dashboard {
+      text-align: left;
+    }
+    
+    .user-info {
+      background: #f9f9f9;
+      padding: 20px;
+      border-radius: 8px;
+      margin: 20px 0;
+    }
+    
+    .booking-section {
+      margin-top: 30px;
+    }
+    
+    .booking-section h3 {
+      margin-bottom: 15px;
+      color: #5a3e36;
+    }
+  </style>
+`;
+
+// Add styles to the document
+document.head.insertAdjacentHTML('beforeend', styles);
+
+// Initialize the app when the page loads
+document.addEventListener('DOMContentLoaded', () => {
+  barberShopApp.init();
+});
